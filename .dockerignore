@@ -1,0 +1,12 @@
+.git/
+.github/
+ansible/
+terraform/
+node_modules
+npm-debug.log
+.gitignore
+README.md
+.env
+.nyc_output
+coverage
+.DS_Store
