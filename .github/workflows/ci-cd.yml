@@ -26,7 +26,7 @@ jobs:
         runs-on: ubuntu-latest
         defaults: 
             run: 
-                working-directory: terraform/   
+                working-directory: terraform/
                 shell: bash
 
         steps:
@@ -50,6 +50,5 @@ jobs:
               run: terraform plan -input=false
 
             - name: Terraform Apply
-              if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
               run: terraform apply -auto-approve -input=false
 
