@@ -25,7 +25,8 @@ jobs:
     terraform:
         runs-on: ubuntu-latest
         defaults: 
-            run:    
+            run: 
+                working-directory: terraform/   
                 shell: bash
 
         steps:
