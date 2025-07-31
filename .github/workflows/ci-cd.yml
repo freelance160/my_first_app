@@ -55,9 +55,10 @@ jobs:
 
     #ansible
   
-            - name: install 
+            - name: install additional dependencies for ansible which runs in venv
               run: |
-                pip install boto3 botocore
+                source /opt/pipx/venvs/ansible-core/bin/activate
+                python -m pip install boto3
             - name: Run Ansible playbook
               run: |
                   ansible --version
