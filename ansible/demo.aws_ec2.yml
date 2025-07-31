@@ -1,0 +1,5 @@
+plugin: amazon.aws.aws_ec2
+
+aws_access_key: AKIAU5LH5PY5JV3X2IZM
+
+aws_secret_key: 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
