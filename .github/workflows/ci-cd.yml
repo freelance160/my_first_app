@@ -48,7 +48,11 @@ jobs:
               run: |
                 source /opt/pipx/venvs/ansible-core/bin/activate
                 python -m pip install boto3
+                
             - name: Run Ansible playbook
+              env:
+                SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
+                EC2_USER: ubuntu  
               run: |
                   
                   ansible-playbook -i host.aws_ec2.yml playbook.yml
