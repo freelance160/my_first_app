@@ -60,8 +60,7 @@ jobs:
 
             - name: Generate Ansible Inventory
               run: |
-                echo "[web]" > inventory.ini
-                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=${{ secrets.SSH_KEY }} >> inventory.ini"
+                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=${{ secrets.SSH_KEY }} > inventory.ini"
               
             - name: Debug Inventory File
               run: cat inventory.ini
