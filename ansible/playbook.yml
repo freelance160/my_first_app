@@ -1,0 +1,18 @@
+- name: Install docker and expense-tracker
+  hosts: aws_ec2
+  become: yes
+  tasks:
+    - name: Install docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes 
+
+    - name: Start docker
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Run docker image 
+      shell: docker run -d -p 3000:3000 freelance160/expense-tracker:6.0

@@ -50,9 +50,8 @@ jobs:
                 python -m pip install boto3
             - name: Run Ansible playbook
               run: |
-                  ansible --version
-                  ansible-galaxy collection list
-                  ansible-inventory -i host.aws_ec2.yml --graph
+                  
+                  ansible-playbook -i host.aws_ec2.yml ansible/playbook.yml
               working-directory: ./ansible/
 
             
