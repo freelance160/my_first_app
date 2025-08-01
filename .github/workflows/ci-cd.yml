@@ -48,12 +48,14 @@ jobs:
               run: |
                 source /opt/pipx/venvs/ansible-core/bin/activate
                 python -m pip install boto3
-                
+
             - name: Run Ansible playbook
               env:
                 SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
                 EC2_USER: ubuntu  
               run: |
-                  
+                  echo "$SSH_PRIVATE_KEY" > web-server.pem
+                  chmod 600 web-server.pem
+                  ssh -i web-server.pem -o StrictHostKeyChecking=no ubuntu@host.aws_ec2.yml
                   ansible-playbook -i host.aws_ec2.yml playbook.yml
               working-directory: ./ansible/
