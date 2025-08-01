@@ -1,5 +1,5 @@
 - name: Install docker and expense-tracker
-  hosts: aws_ec2
+  hosts: [web]
   become: yes
   tasks:
     - name: Install docker

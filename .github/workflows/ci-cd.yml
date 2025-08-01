@@ -40,22 +40,29 @@ jobs:
                   aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
                   aws-region: eu-north-1
 
-            
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v3
+              with:
+                  terraform_wrapper: false
+                      
+            - name: Terraform Init
+              run: terraform init
+    
+            - name: Terraform Plan
+              run: terraform plan -input=false
+    
+            - name: Terraform Apply
+              run: terraform apply -auto-approve -input=false
 
-    #ansible
-  
-            - name: install additional dependencies for ansible which runs in venv
-              run: |
-                source /opt/pipx/venvs/ansible-core/bin/activate
-                python -m pip install boto3
+            - name: Export server IP output
+              id: tf_output
+              run: echo "SERVER_IP=$(terraform output -raw public_ip)" >> $GITHUB_ENV
 
-            - name: Run Ansible playbook
-              env:
-                SSH_PRIVATE_KEY: ${{ secrets.SSH_KEY }}
-                EC2_USER: ubuntu  
+            - name: Generate Ansible Inventory
               run: |
-                  echo "$SSH_PRIVATE_KEY" > web-server.pem
-                  chmod 600 web-server.pem
-                  ssh -t -i web-server.pem -o StrictHostKeyChecking=no ubuntu@aws_ec2
-                  ansible-playbook -i host.aws_ec2.yml playbook.yml
-              working-directory: ./ansible/
+                echo "[web]" > inventory.ini
+                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=${{ secrets.SSH_KEY }} >> inventory.ini"
+
+            - name: Run Ansible Playbook
+              run: ansible-playbook -i inventory.ini playbook.yml
+              working-directory: ansible/
