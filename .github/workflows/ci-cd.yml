@@ -51,7 +51,5 @@ jobs:
             - name: Run Ansible playbook
               run: |
                   
-                  ansible-playbook -i host.aws_ec2.yml ansible/playbook.yml
+                  ansible-playbook -i host.aws_ec2.yml playbook.yml
               working-directory: ./ansible/
-
-            
