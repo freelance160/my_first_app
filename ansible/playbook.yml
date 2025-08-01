@@ -1,5 +1,5 @@
 - name: Install docker and expense-tracker
-  hosts: [web]
+  hosts: web
   become: yes
   tasks:
     - name: Install docker
