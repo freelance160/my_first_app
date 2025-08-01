@@ -62,8 +62,10 @@ jobs:
               run: |
                 echo "[web]" > inventory.ini
                 echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=${{ secrets.SSH_KEY }} >> inventory.ini"
-              working-directory: ./ansible
+              
+            - name: Debug Inventory File
+              run: cat inventory.ini
 
             - name: Run Ansible Playbook
               run: ansible-playbook -i inventory.ini playbook.yml
-              working-directory: ./ansible
+             
