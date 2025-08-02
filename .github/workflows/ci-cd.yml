@@ -72,8 +72,8 @@ jobs:
             - name: Run Ansible playbook
               run: |
                 echo "[app]" > hosts.ini
-                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=sample_key.pem" > inventory.ini
-                ansible-playbook -i hosts.ini playbook.yml
+                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=sample_key.pem" >> hosts.ini
+                ansible-playbook -i hosts.ini ansible/playbook.yml
               
             - name: Debug Inventory File
               run: cat inventory.ini
