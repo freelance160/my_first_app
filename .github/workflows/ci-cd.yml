@@ -62,8 +62,8 @@ jobs:
 
             - name: Write SSH Key
               run: |
-                echo "${{ secrets.SSH_KEY }}" | base64 -d > sample_key.pem
-                chmod 600 sample_key.pem
+                echo "${{ secrets.SSH_KEY }}" | base64 -d > sample_keys.pem
+                chmod 600 sample_keys.pem
               
 
             - name: Install Ansible
@@ -73,7 +73,7 @@ jobs:
               working-directory: ansible
               run: |
                 echo "[app]" > hosts.ini
-                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=sample_key.pem" >> hosts.ini
+                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=sample_keys.pem" >> hosts.ini
                 cat hosts.ini
                 
             
