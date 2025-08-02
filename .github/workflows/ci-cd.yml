@@ -63,7 +63,7 @@ jobs:
             - name: Write SSH Key
               run: |
                 echo "${{ secrets.SSH_KEY }}" | base64 -d > sample_key.pem
-                chmod 600 private_key.pem
+                chmod 600 sample_key.pem
               
 
             - name: Install Ansible
