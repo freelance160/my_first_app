@@ -61,6 +61,7 @@ jobs:
                 echo "SERVER_IP=$(terraform output -raw public_ip)" >> $GITHUB_ENV
 
             - name: Write SSH Key
+              working-directory: ansible
               run: |
                 echo "${{ secrets.SSH_KEY }}" | base64 -d > sample_keys.pem
                 chmod 600 sample_keys.pem
