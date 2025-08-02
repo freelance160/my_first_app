@@ -60,13 +60,19 @@ jobs:
               run: |
                 echo "SERVER_IP=$(terraform output -raw public_ip)" >> $GITHUB_ENV
 
+            - name: Write SSH Key
+              run: |
+                echo "${{ secrets.SSH_KEY }}" | base64 -d > sample_key.pem
+                chmod 600 private_key.pem
+              
+
             - name: Install Ansible
               run: sudo apt-get update && sudo apt-get install -y ansible
 
             - name: Run Ansible playbook
               run: |
                 echo "[app]" > hosts.ini
-                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=${{ secrets.SSH_KEY }} > inventory.ini"
+                echo "$SERVER_IP ansible_user=ubuntu ansible_ssh_private_key_file=sample_key.pem" > inventory.ini
                 ansible-playbook -i hosts.ini playbook.yml
               
             - name: Debug Inventory File
