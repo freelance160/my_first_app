@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "my-terraform-state-bucket"
+    key    = "expense-tracker/terraform.tfstate"
+    region = "eu-north-1"
+  }
+}
+
 provider "aws" {
     region = "eu-north-1"
 }
@@ -78,6 +86,14 @@ resource "aws_vpc_security_group_ingress_rule" "allow_https" {
   ip_protocol       = "tcp"
   to_port           = 443
 }
+resource "aws_vpc_security_group_ingress_rule" "custom_tcp" {
+  security_group_id = aws_security_group.allow_tls.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 3000
+  ip_protocol       = "tcp"
+  to_port           = 3000
+}
+
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   security_group_id = aws_security_group.allow_tls.id
   cidr_ipv4         = "0.0.0.0/0"
