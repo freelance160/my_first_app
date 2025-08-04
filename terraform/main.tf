@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "my-terraform-state-bucket"
+    bucket = "my-expense-tracker-tf-state"
     key    = "expense-tracker/terraform.tfstate"
     region = "eu-north-1"
   }
